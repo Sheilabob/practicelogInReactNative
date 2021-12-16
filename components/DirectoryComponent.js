@@ -9,6 +9,7 @@ function Directory(props) {
             <ListItem   
                 title={item.name}
                 subtitle={item.techniqueGoal}
+                onPress={() => props.onPress(item.id)}
                 leftAvatar={{ source: require('./images/monday-piano.jpg')}}
             />
         )
