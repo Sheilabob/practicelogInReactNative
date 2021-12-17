@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
+import { DAILYLOG } from '../shared/practicedays';
 
 function RenderDailyLog({dailylog}) {
     if(dailylog) {
@@ -20,8 +21,24 @@ function RenderDailyLog({dailylog}) {
     return <View />;
 }
 
-function DailyLogInfo(props) {
-    return <RenderDailyLog dailylog={props.dailylog} />;
+class DailyLogInfo extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dailylog: DAILYLOG,
+        };
+    }
+
+    static navigationOptions = {
+        title: 'Daily Log Information'
+    };
+
+    render() {
+        const dailylogId = this.props.navigation.getParam('dailylogId');
+        const dailylog = this.state.dailylog.filter(dailylog => dailylog.id === dailylogId)[0];
+        return <RenderDailyLog dailylog={dailylog} />;
+    }
 }
 
 export default DailyLogInfo;
