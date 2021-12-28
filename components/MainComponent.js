@@ -5,10 +5,13 @@ import Directory from './DirectoryComponent';
 import DailyLogInfo from './DailyLogInfoComponent';
 import Constants from 'expo-constants';
 import { View, Platform } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
+// createBottomTabNavigator(RouteConfigs, TabNavigatorConfig);
 
 const DirectoryNavigator = createStackNavigator(
     {
@@ -63,15 +66,58 @@ const PracticeHistoryNavigator = createStackNavigator(
     }
 );
 
-const MainNavigator = createDrawerNavigator(
+const MainNavigator = createBottomTabNavigator(
     {
-        Home: {screen: HomeNavigator },
-        Directory: {screen: DirectoryNavigator },
-        'Practice History': {screen: PracticeHistoryNavigator}
+        TabA: {
+            screen: HomeNavigator,
+            navigationOptions: {
+                tabBarIcon: () => (
+                    <Icon
+                        name='list'
+                        type='font-awesome'
+                        size={24}
+                        color='red'
+                    />
+                )
+            }
+         },
+        TabB: {
+            screen: DirectoryNavigator,
+            navigationOptions: {
+                tabBarIcon: () => (
+                    <Icon
+                        name='list'
+                        type='font-awesome'
+                        size={24}
+                        color='red'
+                    />
+                )
+            }
+        },
+        TabC: {
+            screen: PracticeHistoryNavigator,
+            navigationOptions: {
+                tabBarIcon: () => (
+                    <Icon
+                        name='list'
+                        type='font-awesome'
+                        size={24}
+                        color='red'
+                    />
+                )
+            }
+        }
     },
     {
-        drawerBackgroundColor: '#CEC8FF',
-        drawerPosition: 'right'
+        tabBarOptions: {
+            activeTintColor: 'green',
+            labelStyle: {
+              fontSize: 18,
+            },
+            style: {
+              backgroundColor: 'purple',
+            },
+          }
     }
 );
 

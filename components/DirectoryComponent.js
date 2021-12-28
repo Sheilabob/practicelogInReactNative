@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Card } from 'react-native-elements';
 import { DAILYLOG } from '../shared/practicedays';
+import { GOALS } from '../shared/goals';
 
 class Directory extends Component {
 
@@ -9,6 +10,7 @@ class Directory extends Component {
         super(props);
         this.state = {
             dailylog: DAILYLOG,
+            goals: GOALS
         };
     }
 
@@ -21,20 +23,22 @@ class Directory extends Component {
         const renderDirectoryItem = ({item}) => {
             return (
                 <ListItem   
-                    title={item.name}
-                    subtitle={item.techniqueGoal}
-                    onPress={() => navigate('DailyLogInfo', { dailylogId: item.id })}
+                    title={item.category}
+                    subtitle={item.details}
+                    onPress={() => navigate('DailyLogInfo', { goalsId: item.id })}
                     leftAvatar={{ source: require('./images/monday-piano.jpg')}}
                 />
             )
         }
 
         return (
+            <Card title="This Week's Goals">
             <FlatList   
-                data={this.state.dailylog}
+                data={this.state.goals}
                 renderItem={renderDirectoryItem}
                 keyExtractor={item => item.id.toString()}
             />
+            </Card>
         )
     }
 }
