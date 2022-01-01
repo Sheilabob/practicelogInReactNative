@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Home from './HomeComponent';
-import PracticeHistory from './PracticeHistoryComponent';
+import ProfilePage from './ProfilePageComponent';
 import Directory from './DirectoryComponent';
 import DailyLogInfo from './DailyLogInfoComponent';
 import Constants from 'expo-constants';
@@ -10,6 +10,12 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { connect } from 'react-redux';
+import { fetchGoals } from '../redux/ActionCreators';
+
+const mapDispatchToProps = {
+    fetchGoals
+};
 
 // createBottomTabNavigator(RouteConfigs, TabNavigatorConfig);
 
@@ -35,6 +41,7 @@ const DirectoryNavigator = createStackNavigator(
 const HomeNavigator = createStackNavigator(
     {
         Home: { screen: Home },
+        DailyLogInfo: { screen: DailyLogInfo }
     },
     {
         defaultNavigationOptions: {
@@ -49,9 +56,9 @@ const HomeNavigator = createStackNavigator(
     }
 );
 
-const PracticeHistoryNavigator = createStackNavigator(
+const ProfilePageNavigator = createStackNavigator(
     {
-        PracticeHistory: { screen: PracticeHistory },
+        ProfilePage: { screen: ProfilePage },
     },
     {
         defaultNavigationOptions: {
@@ -68,12 +75,12 @@ const PracticeHistoryNavigator = createStackNavigator(
 
 const MainNavigator = createBottomTabNavigator(
     {
-        TabA: {
+        Main: {
             screen: HomeNavigator,
             navigationOptions: {
                 tabBarIcon: () => (
                     <Icon
-                        name='list'
+                        name='music'
                         type='font-awesome'
                         size={24}
                         color='red'
@@ -81,7 +88,7 @@ const MainNavigator = createBottomTabNavigator(
                 )
             }
          },
-        TabB: {
+        'Goal History': {
             screen: DirectoryNavigator,
             navigationOptions: {
                 tabBarIcon: () => (
@@ -94,12 +101,12 @@ const MainNavigator = createBottomTabNavigator(
                 )
             }
         },
-        TabC: {
-            screen: PracticeHistoryNavigator,
+        Profile: {
+            screen: ProfilePageNavigator,
             navigationOptions: {
                 tabBarIcon: () => (
                     <Icon
-                        name='list'
+                        name='user-circle'
                         type='font-awesome'
                         size={24}
                         color='red'
@@ -125,6 +132,10 @@ const AppNavigator = createAppContainer(MainNavigator);
 
 class Main extends Component {
 
+    componentDidMount() {
+        this.props.fetchGoals();
+    }
+
     render() {
         return (
             <View 
@@ -139,4 +150,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default connect(null, mapDispatchToProps)(Main);

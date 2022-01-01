@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-class PracticeHistory extends Component {
+class ProfilePage extends Component {
 
     static navigationOptions = {
         title: 'Practice History'
@@ -10,10 +10,10 @@ class PracticeHistory extends Component {
     render() {
         return (
             <View>
-                <Text>Practice History</Text>
+                <Text>Change this to personal info, like profile stuff, and set up an option to send log to teacher.</Text>
             </View>
         );
     }
 }
 
-export default PracticeHistory;
+export default ProfilePage;

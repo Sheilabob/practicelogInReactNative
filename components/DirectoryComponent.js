@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
-import { ListItem, Card } from 'react-native-elements';
-import { DAILYLOG } from '../shared/practicedays';
-import { GOALS } from '../shared/goals';
+import { Tile, Card } from 'react-native-elements';
+// import { GOALS } from '../shared/goals';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+    return {
+        goals: state.goals
+    };
+};
+
+
 
 class Directory extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            dailylog: DAILYLOG,
-            goals: GOALS
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         goals: GOALS
+    //     };
+    // }
 
     static navigationOptions = {
         title: 'Directory'
@@ -22,11 +30,12 @@ class Directory extends Component {
         const { navigate } = this.props.navigation;
         const renderDirectoryItem = ({item}) => {
             return (
-                <ListItem   
+                <Tile  
                     title={item.category}
-                    subtitle={item.details}
+                    caption={item.details}
+                    featured
                     onPress={() => navigate('DailyLogInfo', { goalsId: item.id })}
-                    leftAvatar={{ source: require('./images/monday-piano.jpg')}}
+                    imageSrc={{uri: baseUrl + item.image}}
                 />
             )
         }
@@ -34,7 +43,7 @@ class Directory extends Component {
         return (
             <Card title="This Week's Goals">
             <FlatList   
-                data={this.state.goals}
+                data={this.props.goals.goals}
                 renderItem={renderDirectoryItem}
                 keyExtractor={item => item.id.toString()}
             />
@@ -43,4 +52,4 @@ class Directory extends Component {
     }
 }
 
-export default Directory;
+export default connect(mapStateToProps)(Directory);
