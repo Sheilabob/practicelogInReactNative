@@ -27,11 +27,12 @@ class Home extends Component {
     render() {
         const { navigate } = this.props.navigation;
         const renderMainPageItem = ({item}) => {
+            if (item.week === 2) {
             return (
                 <ListItem   
                     title={
                         <View>
-                        <Text>{item.category}</Text>
+                        <Text>{item.title}</Text>
                         <Rating
                             readonly
                             imageSize={30}
@@ -45,6 +46,7 @@ class Home extends Component {
                     leftAvatar={{source: {uri: baseUrl + item.image}}}
                 />
             )
+                    }
         }
 
         return (
